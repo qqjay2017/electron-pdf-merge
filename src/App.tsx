@@ -1,12 +1,18 @@
 import { GlobalStyle } from './styles/GlobalStyle'
 
-import { Greetings } from './components/Greetings'
+import FileSelect from './components/FileSelect'
+
+import FileList from './components/FileList'
 
 export function App() {
+
   return (
     <>
       <GlobalStyle />
-      <Greetings />
+      <div>
+        <FileList />
+        <FileSelect />
+      </div>
     </>
   )
 }

@@ -1,6 +1,7 @@
 import { app, BrowserWindow, ipcMain } from 'electron'
+import { selectFile } from './selectFile'
 
-let mainWindow: BrowserWindow | null
+export let mainWindow: BrowserWindow | null
 
 declare const MAIN_WINDOW_WEBPACK_ENTRY: string
 declare const MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY: string
@@ -35,8 +36,11 @@ async function registerListeners () {
    * This comes from bridge integration, check bridge.ts
    */
   ipcMain.on('message', (_, message) => {
-    console.log(message)
+    if(message==='selectFile'){
+       selectFile()
+    }
   })
+
 }
 
 app.on('ready', createWindow)
