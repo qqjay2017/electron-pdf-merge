@@ -1,5 +1,6 @@
 import { dialog } from 'electron'
 import { mainWindow } from './main'
+import { merger } from './merger'
 
 export function selectFile() {
   dialog
@@ -9,6 +10,7 @@ export function selectFile() {
       filters: [{ name: 'Pdf', extensions: ['pdf'] }],
     })
     .then(({ filePaths }) => {
+      merger.add(filePaths[0])
       
         mainWindow?.webContents.send('selectFile',filePaths)
     })

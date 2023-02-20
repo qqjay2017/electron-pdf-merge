@@ -1,4 +1,6 @@
 import { app, BrowserWindow, ipcMain } from 'electron'
+import { handleMerge } from './merger'
+
 import { selectFile } from './selectFile'
 
 export let mainWindow: BrowserWindow | null
@@ -39,6 +41,10 @@ async function registerListeners () {
     if(message==='selectFile'){
        selectFile()
     }
+    if(message==='merge'){
+      handleMerge()
+    }
+ 
   })
 
 }
