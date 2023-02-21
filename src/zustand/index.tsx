@@ -3,11 +3,15 @@ import { immer } from 'zustand/middleware/immer'
 
 export const useBearStore = create(
   immer<{
-    filePaths: string[],
-    push:(newArr?: string[])=>void,
-    init:(newArr?: string[])=>void,
+    filePaths: string[]
+    loading: boolean
+    push: (newArr?: string[]) => void
+    init: (newArr?: string[]) => void
+    setLoading: (flag?:boolean) => void
+
   }>(set => ({
     filePaths: [],
+    loading: false,
     push: (newArr: string[] = []) => {
       set(state => {
         state.filePaths = state.filePaths.concat(newArr)
@@ -18,5 +22,11 @@ export const useBearStore = create(
         state.filePaths = newArr
       })
     },
+    setLoading: (flag:boolean=true) => {
+      set(state => {
+        state.loading = flag
+      })
+    },
+   
   }))
 )

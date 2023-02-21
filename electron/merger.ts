@@ -2,12 +2,13 @@ import PDFMerger from 'pdf-merger-js'
 import { dialog } from 'electron'
 import path from 'path'
 import dayjs from 'dayjs'
+import { mainWindow } from './main'
 
 function pdfMergerState() {
   let merger: PDFMerger | null = null
   const initMerger = (forceInit = false) => {
     if (forceInit || !merger) {
-      merger=null;
+      merger = null
       merger = new PDFMerger()
     }
   }
@@ -36,6 +37,7 @@ function pdfMergerState() {
 export const { merger, initMerger, getMerger, add, save } = pdfMergerState()
 
 export const handleMerge = () => {
+  mainWindow?.webContents.send('setLoading', true)
   dialog
     .showOpenDialog({
       properties: ['openDirectory'],
@@ -43,8 +45,15 @@ export const handleMerge = () => {
     .then(({ filePaths }) => {
       if (filePaths && filePaths[0]) {
         const _path = filePaths[0]
-        const newPath = path.join(_path, `merge.${dayjs().format('HHmmss')}.pdf`)
-        save(newPath)
+        const newPath = path.join(
+          _path,
+          `merge.${dayjs().format('HHmmss')}.pdf`
+        )
+        save(newPath)?.then(() => {
+          mainWindow?.webContents.send('setLoading', false);
+          mainWindow?.webContents.send('mergeSuccess', newPath);
+        })
       }
     })
+    
 }

@@ -3,6 +3,7 @@ import { mainWindow } from './main'
 import { add } from './merger'
 
 export function selectFile() {
+  mainWindow?.webContents.send('setLoading', true)
   dialog
     .showOpenDialog({
       title: '选择pdf文件',
@@ -10,8 +11,12 @@ export function selectFile() {
       filters: [{ name: 'Pdf', extensions: ['pdf'] }],
     })
     .then(({ filePaths }) => {
-      add(filePaths[0])
-
-      mainWindow?.webContents.send('selectFile', filePaths)
+      add(filePaths[0])?.then(() => {
+        mainWindow?.webContents.send('selectFile', filePaths)
+        mainWindow?.webContents.send('setLoading', false)
+      })
+    })
+    .catch(() => {
+      mainWindow?.webContents.send('setLoading', false)
     })
 }
