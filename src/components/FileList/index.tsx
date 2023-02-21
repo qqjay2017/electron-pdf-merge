@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
 import { useBearStore } from '../../zustand'
+import { FileBadge, FileItem, FileListWrap } from './styles'
 
 // import { ipcMain } from 'electron'
 function FileList() {
@@ -14,13 +15,16 @@ function FileList() {
 
     })
   }, [])
-  return <div>
+  return <FileListWrap>
     {
        bearStore.filePaths.map((item, index) => {
-        return <div key={index}>{item}</div>
+        return <FileItem key={index}>
+          <span>{item}</span>
+          <FileBadge>{index+1}</FileBadge>
+        </FileItem>
        })
     }
-  </div>
+  </FileListWrap>
 }
 
 export default FileList

@@ -1,20 +1,11 @@
 import { GlobalStyle } from './styles/GlobalStyle'
 
-import FileSelect from './components/FileSelect'
-
-import FileList from './components/FileList'
-import { MergeBtn } from './components/MergeBtn'
-
+import Portal from './components/Portal'
 export function App() {
-
   return (
     <>
       <GlobalStyle />
-      <div>
-        <FileList />
-        <FileSelect />
-        <MergeBtn />
-      </div>
+      <Portal />
     </>
   )
 }

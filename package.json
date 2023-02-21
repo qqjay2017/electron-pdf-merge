@@ -17,6 +17,7 @@
   "dependencies": {
     "@ant-design/icons": "^5.0.1",
     "antd": "^5.2.2",
+    "dayjs": "^1.11.7",
     "immer": "^9.0.19",
     "pdf-merger-js": "^4.2.0",
     "react": "17.0.2",
